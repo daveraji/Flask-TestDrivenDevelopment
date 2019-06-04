@@ -1,4 +1,5 @@
 import sqlite3
+import json
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
 
 #configuration
@@ -76,6 +77,20 @@ def add_entry():
     db.commit()
     flash('New entry was succesfully posted')
     return redirect(url_for('index'))
+
+@app.route('/delete/<post_id>', methods=['GET'])
+def delete_entry(post_id):
+    #this is to delete a post from the DATABASE
+    result = {'status': 0, 'message': 'Error'}
+    try:
+        db = get_db()
+        db.execute('delete from entries where id=' + post_id)
+        db.commit()
+        result = {'status':1, 'message': 'Post Deleted'}
+    except Exception as e:
+        result = {'status': 0, 'message': repr(e)}
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     init_db()
