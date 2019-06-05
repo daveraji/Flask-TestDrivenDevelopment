@@ -13,6 +13,7 @@
       <a class="btn btn-success" role="button" href="{{ url_for('login') }}">log in</a>
     {% else %}
       <a class="btn btn-warning role="button" href="{{ url_for('logout') }}">log out</a>
+      <a class="btn btn-info" role="button" href="{{ url_for('search') }}">Search</a>
     {% endif %}
 
     <br><br>
@@ -36,7 +37,7 @@
     <ul class="entries">
       {% for entry in entries %}
       <li class="entry">
-         <h2 id="{{ entry.id }}">{{ entry.title }}</h2>
+         <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
          {{ entry.text|safe }}
       </li>
         {% else %}
